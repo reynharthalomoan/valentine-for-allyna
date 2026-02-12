@@ -63,11 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
         heart.style.left = `${x}px`;
         heart.style.top = `${y}px`;
         
-        // Use pointerdown for universal mobile/desktop support
-        heart.addEventListener('pointerdown', function(e) {
+        // Use both touchstart and mousedown for maximum compatibility on older iOS
+        const handleInteraction = (e) => {
             e.preventDefault();
-            catchHeart.call(this);
-        });
+            e.stopPropagation();
+            catchHeart.call(heart);
+        };
+
+        heart.addEventListener('touchstart', handleInteraction, { passive: false });
+        heart.addEventListener('mousedown', handleInteraction);
 
         gameArea.appendChild(heart);
 

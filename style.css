@@ -134,10 +134,18 @@ body {
 
 .game-heart {
     position: absolute;
-    font-size: 2rem;
+    font-size: 2.5rem; /* Slightly larger for easier tapping */
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation; /* Critical for iOS Safari */
     transition: transform 0.1s;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
 }
 
 .game-heart:active {
