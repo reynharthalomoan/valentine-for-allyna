@@ -14,22 +14,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- NAVIGATION ---
     function showScreen(id) {
+        // Use a more robust transition for GitHub Pages
         screens.forEach(s => {
             s.classList.remove('active');
-            setTimeout(() => {
-                if (!s.classList.contains('active')) {
-                    s.style.display = 'none';
-                }
-            }, 800);
+            s.style.display = 'none';
         });
         
         const nextScreen = document.getElementById(`screen-${id}`);
-        nextScreen.style.display = 'flex';
-        void nextScreen.offsetWidth;
-        nextScreen.classList.add('active');
-        window.scrollTo(0, 0);
-        
-        if (id === 3) triggerConfetti();
+        if (nextScreen) {
+            nextScreen.style.display = 'flex';
+            // Trigger reflow
+            void nextScreen.offsetWidth;
+            nextScreen.classList.add('active');
+            window.scrollTo(0, 0);
+            
+            if (id === 3) triggerConfetti();
+        }
     }
 
     btnYes1.addEventListener('click', () => showScreen(3));
