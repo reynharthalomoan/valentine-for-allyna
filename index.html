@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentine Invitation - Allyna 💗</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Floating Hearts Container -->
+        <div id="hearts-container"></div>
+
+        <!-- Screen 0: Game (Landing) -->
+        <section id="screen-0" class="screen active">
+            <div class="content">
+                <h1 class="title">Wait! 🛑</h1>
+                <p class="text">Before you enter, you must catch 5 hearts to prove your love! 💗</p>
+                <div id="game-container">
+                    <div id="game-score">Hearts Caught: <span id="score-val">0</span>/5</div>
+                    <div id="game-area"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 1: Invite -->
+        <section id="screen-1" class="screen">
+            <div class="content">
+                <h1 class="title">Allyna 💗</h1>
+                <p class="text">Will you be my Valentine<br><small>(please don’t reject!)</small>?</p>
+                <p class="subtext">Pick you up at 6:00 PM for dinner.</p>
+                <div class="buttons">
+                    <button id="btn-yes-1" class="btn btn-yes pulse">Yes</button>
+                    <button id="btn-think" class="btn btn-think wiggle">Let me think</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 2: Thinking -->
+        <section id="screen-2" class="screen">
+            <div class="content">
+                <h1 class="title">Thinking…? 🤭</h1>
+                <p class="text">Careful… the hearts are getting impatient.</p>
+                <div class="buttons">
+                    <button id="btn-yes-2" class="btn btn-yes bounce">Okay yes 😳</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 3: Success -->
+        <section id="screen-3" class="screen">
+            <div class="content">
+                <h1 class="title">YAY! It’s a date 💘</h1>
+                <div class="details-card">
+                    <p class="restaurant-name">Casper Restaurant - Orient Jakarta</p>
+                    <p>I’ll pick you up at 6:00 PM</p>
+                    <p>February 14, 2026</p>
+                    
+                    <div class="restaurant-photo-container">
+                        <img id="restaurant-img" src="assets/restaurant.jpg" alt="Casper Restaurant" onerror="this.style.display='none'; document.getElementById('img-placeholder').style.display='block';">
+                        <div id="img-placeholder" style="display:none;" class="placeholder">Add /assets/restaurant.jpg</div>
+                        <p class="caption">See you here 💗</p>
+                    </div>
+
+                    <div class="countdown-container">
+                        <p class="countdown-label">Countdown to pickup</p>
+                        <div id="countdown" class="countdown-timer">00:00:00:00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
