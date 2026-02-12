@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- NAVIGATION ---
     function showScreen(id) {
-        // Use a more robust transition for GitHub Pages
+        console.log("Switching to screen:", id);
+        
+        // Force all screens to hide
         screens.forEach(s => {
             s.classList.remove('active');
             s.style.display = 'none';
@@ -29,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0);
             
             if (id === 3) triggerConfetti();
+        } else {
+            console.error("Screen not found:", id);
         }
     }
 
@@ -37,8 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnThink.addEventListener('click', () => showScreen(2));
 
     // Initialize first screen (Game)
-    document.getElementById('screen-0').style.display = 'flex';
-    document.getElementById('screen-0').classList.add('active');
+    showScreen(0);
     initGame();
 
     // --- GAME LOGIC ---
@@ -54,16 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
         heart.innerHTML = '💗';
         
         // Random position within game area
-        const x = Math.random() * (gameArea.clientWidth - 40);
-        const y = Math.random() * (gameArea.clientHeight - 40);
+        const x = Math.random() * (gameArea.clientWidth - 50);
+        const y = Math.random() * (gameArea.clientHeight - 50);
         
         heart.style.left = `${x}px`;
         heart.style.top = `${y}px`;
         
-        heart.addEventListener('mousedown', catchHeart);
-        heart.addEventListener('touchstart', (e) => {
+        // Use pointerdown for universal mobile/desktop support
+        heart.addEventListener('pointerdown', function(e) {
             e.preventDefault();
-            catchHeart();
+            catchHeart.call(this);
         });
 
         gameArea.appendChild(heart);
@@ -74,34 +77,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearInterval(moveInterval);
                 return;
             }
-            const newX = Math.random() * (gameArea.clientWidth - 40);
-            const newY = Math.random() * (gameArea.clientHeight - 40);
+            const newX = Math.random() * (gameArea.clientWidth - 50);
+            const newY = Math.random() * (gameArea.clientHeight - 50);
             heart.style.left = `${newX}px`;
             heart.style.top = `${newY}px`;
-        }, 1000);
+        }, 1200);
     }
 
     function catchHeart() {
         score++;
         scoreVal.textContent = score;
         
-        // Particle effect for catching
-        confetti({
-            particleCount: 20,
-            spread: 50,
-            origin: { 
-                x: (this.getBoundingClientRect().left + 20) / window.innerWidth, 
-                y: (this.getBoundingClientRect().top + 20) / window.innerHeight 
-            },
-            colors: ['#ff69b4', '#ffffff']
-        });
+        // Visual feedback
+        if (window.confetti) {
+            confetti({
+                particleCount: 15,
+                spread: 40,
+                origin: { 
+                    x: (this.getBoundingClientRect().left + 25) / window.innerWidth, 
+                    y: (this.getBoundingClientRect().top + 25) / window.innerHeight 
+                },
+                colors: ['#ff69b4', '#ffffff']
+            });
+        }
 
         this.remove();
 
         if (score >= targetScore) {
+            // Success! Move to invite screen
             setTimeout(() => {
                 showScreen(1);
-            }, 500);
+            }, 300);
         } else {
             spawnHeart();
         }
@@ -120,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heart.style.opacity = Math.random() * 0.5 + 0.3;
             heartsContainer.appendChild(heart);
             setTimeout(() => heart.remove(), 10000);
-        }, 800);
+        }, 1000);
     }
 
     // --- COUNTDOWN ---
